@@ -1,4 +1,4 @@
-module github.com/flowchartsman/handlebars/v3
+module github.com/fixpoint/handlebars/v3
 
 go 1.16
 
