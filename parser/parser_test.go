@@ -5,8 +5,8 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/flowchartsman/handlebars/v3/ast"
-	"github.com/flowchartsman/handlebars/v3/lexer"
+	"github.com/fixpoint/handlebars/v3/ast"
+	"github.com/fixpoint/handlebars/v3/lexer"
 )
 
 type parserTest struct {

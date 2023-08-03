@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/flowchartsman/handlebars/v3"
+	"github.com/fixpoint/handlebars/v3"
 )
 
 //

@@ -1,9 +1,8 @@
 # handlebars
-[![Go Reference](https://pkg.go.dev/badge/github.com/flowchartsman/handlebars.svg)](https://pkg.go.dev/github.com/flowchartsman/handlebars/v3)
 
-Handlebars for [golang](https://golang.org) with the same features as [handlebars.js](http://handlebarsjs.com) `3.0`. Hard fork of [Raymond](https://github.com/aymerick/raymond) to modularize and keep up with handlebars development.
+Handlebars for [golang](https://golang.org) with the same features as [handlebars.js](http://handlebarsjs.com) `3.0`. A fork of [flowchartsman](https://github.com/flowchartsman/handlebars).
 
-![Handlebars Logo](https://github.com/flowchartsman/handlebars/blob/main/handlebars-gopher.png?raw=true "Handlebars")
+![Handlebars Logo](https://github.com/fixpoint/handlebars/blob/main/handlebars-gopher.png?raw=true "Handlebars")
 
 
 # Table of Contents
@@ -55,7 +54,7 @@ Handlebars for [golang](https://golang.org) with the same features as [handlebar
 
 ## Quick Start
 
-    $ go get github.com/flowchartsman/handlebars/v3
+    $ go get github.com/fixpoint/handlebars/v3
 
 The quick and dirty way of rendering a handlebars template:
 
@@ -65,7 +64,7 @@ package main
 import (
     "fmt"
 
-    "github.com/flowchartsman/handlebars/v3"
+    "github.com/fixpoint/handlebars/v3"
 )
 
 func main() {
@@ -115,7 +114,7 @@ package main
 import (
     "fmt"
 
-    "github.com/flowchartsman/handlebars/v3
+    "github.com/fixpoint/handlebars/v3
 )
 
 func main() {
@@ -199,7 +198,7 @@ package main
 import (
   "fmt"
 
-  "github.com/flowchartsman/handlebars/v3
+  "github.com/fixpoint/handlebars/v3
 )
 
 func main() {
@@ -1313,7 +1312,7 @@ package main
 import (
     "fmt"
 
-    "github.com/flowchartsman/handlebars/v3/lexer"
+    "github.com/fixpoint/handlebars/v3/lexer"
 )
 
 func main() {
@@ -1355,8 +1354,8 @@ package main
 import (
     "fmt"
 
-    "github.com/flowchartsman/handlebars/v3/ast"
-    "github.com/flowchartsman/handlebars/v3/parser"
+    "github.com/fixpoint/handlebars/v3/ast"
+    "github.com/fixpoint/handlebars/v3/parser"
 )
 
 fu  nc main() {
