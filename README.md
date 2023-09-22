@@ -1358,7 +1358,7 @@ import (
     "github.com/fixpoint/handlebars/v3/parser"
 )
 
-fu  nc main() {
+func main() {
     source := "You know {{nothing}} John Snow"
 
     // parse template
