@@ -651,7 +651,7 @@ func (v *evalVisitor) callFunc(name string, funcVal reflect.Value, options *Opti
 	return result[0]
 }
 
-// callHelper invoqs helper function for given expression node
+// callHelper invokes helper function for given expression node
 func (v *evalVisitor) callHelper(name string, helper reflect.Value, node *ast.Expression) interface{} {
 	result := v.callFunc(name, helper, v.helperOptions(node))
 	if !result.IsValid() {
