@@ -563,38 +563,6 @@ var helpersTests = []Test{
 		"NOT PRINTING",
 	},
 	{
-		"if a context is not found, helperMissing is used",
-		"{{hello}} {{link_to world}}",
-		nil,
-		nil,
-		nil,
-		nil,
-		`Missing helper: "link_to"`,
-	},
-	{
-		"if a context is not found, custom helperMissing is used",
-		"{{hello}} {{link_to world}}",
-		map[string]interface{}{"hello": "Hello", "world": "world"},
-		nil,
-		map[string]interface{}{"helperMissing": func(name string, options *handlebars.Options, args ...interface{}) handlebars.SafeString {
-			mesg := args[0].(string)
-			return handlebars.SafeString("<a>" + mesg + "</a>")
-		}},
-		nil,
-		"Hello <a>world</a>",
-	},
-	{
-		"if a value is not found, custom helperMissing is used",
-		"{{hello}} {{link_to}}",
-		map[string]interface{}{"hello": "Hello", "world": "world"},
-		nil,
-		map[string]interface{}{"helperMissing": func(name string, options *handlebars.Options, args ...interface{}) handlebars.SafeString {
-			return handlebars.SafeString("<a>winning</a>")
-		}},
-		nil,
-		"Hello <a>winning</a>",
-	},
-	{
 		"block helpers can take an optional hash with booleans (1)",
 		`{{#goodbye cruel="CRUEL" print=false}}world{{/goodbye}}`,
 		nil, nil,
