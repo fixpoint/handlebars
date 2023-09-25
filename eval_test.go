@@ -102,6 +102,15 @@ var evalTests = []Test{
 	},
 	// @todo Test with a "../../path" (depth 2 path) while context is only depth 1
 	{
+		"if a block is not found and without params, helperMissing is used",
+		"some_{{#foo}}abc{{/foo}}block",
+		nil,
+		nil,
+		nil,
+		nil,
+		"some_block",
+	},
+	{
 		"if a context is not found, custom helperMissing is used",
 		"{{hello}} {{link_to world}}",
 		map[string]interface{}{"hello": "Hello", "world": "world"},
@@ -162,6 +171,15 @@ var evalErrors = []Test{
 		nil,
 		nil,
 		`Missing helper: "link_to"`,
+	},
+	{
+		"if a block is not found, helperMissing is used",
+		"{{#foo bar}}abc{{/foo}}",
+		nil,
+		nil,
+		nil,
+		nil,
+		`Missing helper: "foo"`,
 	},
 }
 
