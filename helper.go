@@ -403,18 +403,11 @@ func equalHelper(a interface{}, b interface{}, options *Options) interface{} {
 //
 
 // #helperMissing helper
-func helperMissingHelper(args ...interface{}) interface{} {
-	options, ok := args[len(args)-1].(*Options)
-	if !ok {
-		return nil
-	}
-	if len(args) == 1 {
+func helperMissingHelper(name string, options *Options, args ...interface{}) interface{} {
+	if len(args) == 0 {
 		// A missing field in a {{foo}} construct
 		return nil
 	}
-	node, ok := options.eval.curNode.(*ast.Expression)
-	if ok {
-		options.eval.errorf(`Missing helper: "%s"`, node.HelperName())
-	}
+	options.eval.errorf(`Missing helper: "%s"`, name)
 	return nil
 }

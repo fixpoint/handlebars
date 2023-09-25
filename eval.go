@@ -699,7 +699,9 @@ func (v *evalVisitor) callHelperMissing(node *ast.Expression) interface{} {
 func (v *evalVisitor) callHelperMissingFunc(name string, funcVal reflect.Value, options *Options) reflect.Value {
 	params := options.Params()
 
-	args := make([]reflect.Value, len(params)+1)
+	args := make([]reflect.Value, len(params)+2)
+	args[0] = reflect.ValueOf(name)
+	args[1] = reflect.ValueOf(options)
 
 	// check and collect arguments
 	funcType := funcVal.Type()
@@ -709,9 +711,8 @@ func (v *evalVisitor) callHelperMissingFunc(name string, funcVal reflect.Value, 
 		if !arg.IsValid() {
 			arg = reflect.Zero(argType)
 		}
-		args[i] = arg
+		args[i+2] = arg
 	}
-	args[len(args)-1] = reflect.ValueOf(options)
 
 	result := funcVal.Call(args)
 
