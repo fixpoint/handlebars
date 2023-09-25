@@ -35,6 +35,8 @@ Handlebars for [golang](https://golang.org) with the same features as [handlebar
   - [Utilites](#utilites)
     - [`Str()`](#str)
     - [`IsTrue()`](#istrue)
+- [Hooks](#hooks)
+  - [`helperMissing`](#helpermissing)
 - [Context Functions](#context-functions)
 - [Partials](#partials)
   - [Template Partials](#template-partials)
@@ -1091,6 +1093,55 @@ It returns `false` when parameter is either:
   - `false`
 
 For all others values, `IsTrue()` returns `true`.
+
+
+## Hooks
+
+There are several places where you can hook into Handlebars function calls.
+
+
+### `helperMissing`
+
+This hook is called when a mustache or a block-statement
+
+- a simple mustache-expression is not a registered helper AND
+- is not a property of the current evaluation context.
+
+If no parameters are passed to the mustache, the default behavior is to do nothing and ignore the whole mustache expression or the whole block:
+
+For example that template:
+
+```html
+some_{{foo}}mustache
+some_{{#foo}}abc{{/foo}}block
+```
+
+Outputs:
+
+```html
+some_mustache
+some_block
+```
+
+If parameter is passed to the mustache, Handlebars with throw an exception:
+
+For example that template:
+
+```html
+{{foo bar}}
+```
+
+OR
+
+```html
+{{#foo bar}}abc{{/foo}}
+```
+
+Throws:
+
+```html
+Missing helper: "foo"
+```
 
 
 ## Context Functions
