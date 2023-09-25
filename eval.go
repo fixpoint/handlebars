@@ -679,6 +679,45 @@ func (v *evalVisitor) helperOptions(node *ast.Expression) *Options {
 	return newOptions(v, params, hash)
 }
 
+// callHelperMissing invokes when a potential helper expression was not found
+func (v *evalVisitor) callHelperMissing(node *ast.Expression) interface{} {
+	helper := v.findHelper("helperMissing")
+	if helper == zero {
+		return nil
+	}
+
+	result := v.callHelperMissingFunc(node.HelperName(), helper, v.helperOptions(node))
+	if !result.IsValid() {
+		return nil
+	}
+
+	// @todo We maybe want to ensure here that helper returned a string or a SafeString
+	return result.Interface()
+}
+
+// callHelperMissingFunc calls function with given options
+func (v *evalVisitor) callHelperMissingFunc(name string, funcVal reflect.Value, options *Options) reflect.Value {
+	params := options.Params()
+
+	args := make([]reflect.Value, len(params)+1)
+
+	// check and collect arguments
+	funcType := funcVal.Type()
+	argType := funcType.In(2).Elem()
+	for i, param := range params {
+		arg := reflect.ValueOf(param)
+		if !arg.IsValid() {
+			arg = reflect.Zero(argType)
+		}
+		args[i] = arg
+	}
+	args[len(args)-1] = reflect.ValueOf(options)
+
+	result := funcVal.Call(args)
+
+	return result[0]
+}
+
 //
 // Partials
 //
@@ -943,7 +982,15 @@ func (v *evalVisitor) VisitExpression(node *ast.Expression) interface{} {
 			// that this path is at root of current expression
 			if val := v.evalPathExpression(path, true); val != nil {
 				result = val
+				done = true
 			}
+		}
+	}
+
+	if !done {
+		// missing
+		if val := v.callHelperMissing(node); val != nil {
+			result = val
 		}
 	}
 

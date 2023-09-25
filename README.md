@@ -1297,7 +1297,6 @@ These handlebars features are currently NOT implemented:
 
 - raw block content is not passed as a parameter to helper
 - `blockHelperMissing` - helper called when a helper can not be directly resolved
-- `helperMissing` - helper called when a potential helper expression was not found
 - `@contextPath` - value set in `trackIds` mode that records the lookup path for the current context
 - `@level` - log level
 
