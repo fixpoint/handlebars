@@ -101,6 +101,38 @@ var evalTests = []Test{
 		`Length: 5`,
 	},
 	// @todo Test with a "../../path" (depth 2 path) while context is only depth 1
+	{
+		"if a block is not found and without params, helperMissing is used",
+		"some_{{#foo}}abc{{/foo}}block",
+		nil,
+		nil,
+		nil,
+		nil,
+		"some_block",
+	},
+	{
+		"if a context is not found, custom helperMissing is used",
+		"{{hello}} {{link_to world}}",
+		map[string]interface{}{"hello": "Hello", "world": "world"},
+		nil,
+		map[string]interface{}{"helperMissing": func(name string, options *Options, args ...interface{}) SafeString {
+			mesg := args[0].(string)
+			return SafeString("<a>" + mesg + "</a>")
+		}},
+		nil,
+		"Hello <a>world</a>",
+	},
+	{
+		"if a value is not found, custom helperMissing is used",
+		"{{hello}} {{link_to}}",
+		map[string]interface{}{"hello": "Hello", "world": "world"},
+		nil,
+		map[string]interface{}{"helperMissing": func(name string, options *Options, args ...interface{}) SafeString {
+			return SafeString("<a>winning</a>")
+		}},
+		nil,
+		"Hello <a>winning</a>",
+	},
 }
 
 func TestEval(t *testing.T) {
@@ -130,6 +162,24 @@ var evalErrors = []Test{
 		map[string]interface{}{"foo": func() (string, bool, string) { return "foo", true, "bar" }},
 		nil, nil, nil,
 		"Helper function must return a string or a SafeString",
+	},
+	{
+		"if a context is not found, helperMissing is used",
+		"{{hello}} {{link_to world}}",
+		nil,
+		nil,
+		nil,
+		nil,
+		`Missing helper: "link_to"`,
+	},
+	{
+		"if a block is not found, helperMissing is used",
+		"{{#foo bar}}abc{{/foo}}",
+		nil,
+		nil,
+		nil,
+		nil,
+		`Missing helper: "foo"`,
 	},
 }
 

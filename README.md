@@ -35,6 +35,8 @@ Handlebars for [golang](https://golang.org) with the same features as [handlebar
   - [Utilites](#utilites)
     - [`Str()`](#str)
     - [`IsTrue()`](#istrue)
+- [Hooks](#hooks)
+  - [`helperMissing`](#helpermissing)
 - [Context Functions](#context-functions)
 - [Partials](#partials)
   - [Template Partials](#template-partials)
@@ -1093,6 +1095,55 @@ It returns `false` when parameter is either:
 For all others values, `IsTrue()` returns `true`.
 
 
+## Hooks
+
+There are several places where you can hook into Handlebars function calls.
+
+
+### `helperMissing`
+
+This hook is called when a mustache or a block-statement
+
+- a simple mustache-expression is not a registered helper AND
+- is not a property of the current evaluation context.
+
+If no parameters are passed to the mustache, the default behavior is to do nothing and ignore the whole mustache expression or the whole block:
+
+For example that template:
+
+```html
+some_{{foo}}mustache
+some_{{#foo}}abc{{/foo}}block
+```
+
+Outputs:
+
+```html
+some_mustache
+some_block
+```
+
+If parameter is passed to the mustache, Handlebars with throw an exception:
+
+For example that template:
+
+```html
+{{foo bar}}
+```
+
+OR
+
+```html
+{{#foo bar}}abc{{/foo}}
+```
+
+Throws:
+
+```html
+Missing helper: "foo"
+```
+
+
 ## Context Functions
 
 In addition to helpers, lambdas found in context are evaluated.
@@ -1297,7 +1348,6 @@ These handlebars features are currently NOT implemented:
 
 - raw block content is not passed as a parameter to helper
 - `blockHelperMissing` - helper called when a helper can not be directly resolved
-- `helperMissing` - helper called when a potential helper expression was not found
 - `@contextPath` - value set in `trackIds` mode that records the lookup path for the current context
 - `@level` - log level
 
@@ -1358,7 +1408,7 @@ import (
     "github.com/fixpoint/handlebars/v3/parser"
 )
 
-fu  nc main() {
+func main() {
     source := "You know {{nothing}} John Snow"
 
     // parse template

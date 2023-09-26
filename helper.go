@@ -32,6 +32,7 @@ func init() {
 	RegisterHelper("log", logHelper)
 	RegisterHelper("lookup", lookupHelper)
 	RegisterHelper("equal", equalHelper)
+	RegisterHelper("helperMissing", helperMissingHelper)
 }
 
 // RegisterHelper registers a global helper. That helper will be available to all templates.
@@ -39,7 +40,7 @@ func RegisterHelper(name string, helper interface{}) {
 	helpersMutex.Lock()
 	defer helpersMutex.Unlock()
 
-	if helpers[name] != zero {
+	if helpers[name] != zero && name != "helperMissing" {
 		panic(fmt.Errorf("Helper already registered: %s", name))
 	}
 
@@ -395,4 +396,18 @@ func equalHelper(a interface{}, b interface{}, options *Options) interface{} {
 	}
 
 	return options.Inverse()
+}
+
+//
+// Hooks
+//
+
+// #helperMissing helper
+func helperMissingHelper(name string, options *Options, args ...interface{}) interface{} {
+	if len(args) == 0 {
+		// A missing field in a {{foo}} construct
+		return nil
+	}
+	options.eval.errorf(`Missing helper: "%s"`, name)
+	return nil
 }

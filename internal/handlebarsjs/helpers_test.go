@@ -562,13 +562,6 @@ var helpersTests = []Test{
 		nil,
 		"NOT PRINTING",
 	},
-
-	// @todo "helperMissing - if a context is not found, helperMissing is used" throw error
-
-	// @todo "helperMissing - if a context is not found, custom helperMissing is used"
-
-	// @todo "helperMissing - if a value is not found, custom helperMissing is used"
-
 	{
 		"block helpers can take an optional hash with booleans (1)",
 		`{{#goodbye cruel="CRUEL" print=false}}world{{/goodbye}}`,
